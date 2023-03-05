@@ -14,3 +14,9 @@ GET http://localhost:8882/test/list
 Accept: application/json
 
 ###
+
+GET http://localhost:8882/test/animal
+Accept: application/json
+
+
+###

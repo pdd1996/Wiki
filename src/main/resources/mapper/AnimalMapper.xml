@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdd.wiki.mapper.AnimalMapper">
+    <select id="animalList" resultType="com.pdd.wiki.domian.Animal">
+        select `id`, `animal-name`, `type`, `age` from `animal`
+    </select>
+</mapper>

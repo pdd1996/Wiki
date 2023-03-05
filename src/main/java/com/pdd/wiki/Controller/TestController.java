@@ -1,6 +1,8 @@
 package com.pdd.wiki.Controller;
 
+import com.pdd.wiki.domian.Animal;
 import com.pdd.wiki.domian.Test;
+import com.pdd.wiki.service.AnimalService;
 import com.pdd.wiki.service.TestService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ public class TestController {
 
     @Resource
     private TestService testService;
+
+    @Resource
+    private AnimalService animalService;
     /*
     常用 GET, POST, PUT, DELETE
      */
@@ -35,5 +40,10 @@ public class TestController {
     @GetMapping("/test/list")
     public List<Test> list() {
         return testService.list();
+    }
+
+    @GetMapping("/test/animal")
+    public List<Animal> animalList() {
+        return animalService.animalList();
     }
 }
