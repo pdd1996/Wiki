@@ -1,6 +1,6 @@
 package com.pdd.wiki.service;
 
-import com.pdd.wiki.domian.Animal;
+import com.pdd.wiki.domain.Animal;
 import com.pdd.wiki.mapper.AnimalMapper;
 import org.springframework.stereotype.Service;
 

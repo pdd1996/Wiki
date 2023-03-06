@@ -1,7 +1,7 @@
 package com.pdd.wiki.mapper;
 
-import com.pdd.wiki.domian.Demo;
-import com.pdd.wiki.domian.DemoExample;
+import com.pdd.wiki.domain.Demo;
+import com.pdd.wiki.domain.DemoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

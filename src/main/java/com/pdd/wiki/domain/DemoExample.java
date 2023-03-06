@@ -1,4 +1,4 @@
-package com.pdd.wiki.domian;
+package com.pdd.wiki.domain;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -34,7 +34,7 @@
         <!-- 注意设置文件路径 -->
         <!-- 实体类的位置 -->
         <javaModelGenerator targetProject="src\main\java"
-                            targetPackage="com.pdd.wiki.domian"/>
+                            targetPackage="com.pdd.wiki.domain"/>
 
         <!-- mapper xml的位置 -->
         <sqlMapGenerator targetProject="src\main\resources"

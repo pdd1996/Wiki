@@ -1,4 +1,4 @@
-package com.pdd.wiki.domian;
+package com.pdd.wiki.domain;
 
 public class Demo {
     private Long id;

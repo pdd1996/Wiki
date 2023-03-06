@@ -1,7 +1,7 @@
 package com.pdd.wiki.Controller;
 
-import com.pdd.wiki.domian.Animal;
-import com.pdd.wiki.domian.Test;
+import com.pdd.wiki.domain.Animal;
+import com.pdd.wiki.domain.Test;
 import com.pdd.wiki.service.AnimalService;
 import com.pdd.wiki.service.TestService;
 import org.springframework.beans.factory.annotation.Value;

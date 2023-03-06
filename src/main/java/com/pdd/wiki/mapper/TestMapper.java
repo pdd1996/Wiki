@@ -1,6 +1,6 @@
 package com.pdd.wiki.mapper;
 
-import com.pdd.wiki.domian.Test;
+import com.pdd.wiki.domain.Test;
 
 import java.util.List;
 
