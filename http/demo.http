@@ -1,0 +1,4 @@
+GET http://localhost:8882/demo/list
+Accept: application/json
+
+###
