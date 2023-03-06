@@ -46,12 +46,8 @@
                              type="XMLMAPPER"/>
 
         <!--<table tableName="demo" domainObjectName="Demo"/>-->
-        <!--        <table tableName="ebook"/>-->
-        <!--        <table tableName="category"/>-->
-        <!--        <table tableName="doc"/>-->
-        <!--        <table tableName="content"/>-->
-        <!--        <table tableName="user"/>-->
-        <table tableName="demo"/>
+<!--        <table tableName="demo"/>-->
+        <table tableName="ebook"/>
         <!--        设置要生成对应类的表名-->
         <!--        <table tableName="test"/>-->
     </context>
