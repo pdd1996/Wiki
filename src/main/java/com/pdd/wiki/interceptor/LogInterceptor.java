@@ -9,6 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 拦截器： spring框架特有的，用于登录校验，权限校验，请求日志打印
+ */
  @Component
  public class LogInterceptor implements HandlerInterceptor {
 
