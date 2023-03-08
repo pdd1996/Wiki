@@ -103,7 +103,6 @@ export default defineComponent({
         const data = resp.data;
         ebooks.value = data.content;
         ebooks1.books = data.content;
-        console.log(resp);
       })
     });
     const actions: Record<string, string>[] = [
