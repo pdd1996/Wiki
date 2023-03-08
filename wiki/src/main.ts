@@ -4,7 +4,10 @@ import router from './router'
 import store from './store'
 import Ant from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
+import axios from 'axios'
 // import * as Icons from '@ant-design/icons-vue'
+
+axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 
 const app = createApp(App);
 app.use(store).use(router).use(Ant).mount('#app');
