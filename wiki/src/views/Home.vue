@@ -61,6 +61,7 @@
 <script lang="ts">
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
+import axios from 'axios'
 export default defineComponent({
   name: 'Home',
   components: {
@@ -69,6 +70,10 @@ export default defineComponent({
     NotificationOutlined,
   },
   setup() {
+    console.log("setup");
+    axios.get("http://localhost:8882/ebook/list?bookName=Java").then((resp) => {
+      console.log(resp);
+    })
     return {
       selectedKeys1: ref<string[]>(['2']),
       selectedKeys2: ref<string[]>(['1']),
