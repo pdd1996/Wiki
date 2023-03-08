@@ -50,7 +50,6 @@
         <a-list 
         item-layout="vertical" 
         size="large" 
-        :pagination="pagination" 
         :data-source="ebooks"
         :grid="{ gutter: 25, column: 3 }"
         >
@@ -119,12 +118,6 @@ export default defineComponent({
         console.log(resp);
       })
     });
-    const pagination = {
-      onChange: (page: number) => {
-        console.log(page);
-      },
-      pageSize: 3,
-    };
     const actions: Record<string, string>[] = [
       { type: 'StarOutlined', text: '156' },
       { type: 'LikeOutlined', text: '156' },
@@ -138,11 +131,18 @@ export default defineComponent({
       selectedKeys2: ref<string[]>(['1']),
       openKeys: ref<string[]>(['sub1']),
       listData,
-      pagination,
       actions,
     };
   },
 });
 </script>
 
-<style></style>
+<style scoped>
+.ant-avatar {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 8%;
+  margin: 5px 0;
+}
+</style>
