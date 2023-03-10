@@ -1,4 +1,4 @@
-package com.pdd.wiki.Controller;
+package com.pdd.wiki.controller;
 
 import com.pdd.wiki.domain.Demo;
 import com.pdd.wiki.service.DemoService;

@@ -1,4 +1,4 @@
-package com.pdd.wiki.Controller;
+package com.pdd.wiki.controller;
 
 import com.pdd.wiki.req.EbookReq;
 import com.pdd.wiki.resp.CommonResp;

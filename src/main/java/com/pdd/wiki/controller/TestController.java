@@ -1,4 +1,4 @@
-package com.pdd.wiki.Controller;
+package com.pdd.wiki.controller;
 
 import com.pdd.wiki.domain.Animal;
 import com.pdd.wiki.domain.Test;
