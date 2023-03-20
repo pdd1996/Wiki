@@ -84,7 +84,7 @@ export default defineComponent({
       // 当前页
       current: 1,
       // 展示页
-      pageSize: 2,
+      pageSize: 3,
     }));
     const loading = ref(false);
 
@@ -95,7 +95,7 @@ export default defineComponent({
       loading.value = true;
       axios.get("/ebook/list", {
         params: {
-          bookName: "Java"
+          bookName: "Java",
         }
       }).then((response) => {
         loading.value = false;
