@@ -1,5 +1,6 @@
 package com.pdd.wiki.service;
 
+import com.github.pagehelper.PageHelper;
 import com.pdd.wiki.domain.Ebook;
 import com.pdd.wiki.domain.EbookExample;
 import com.pdd.wiki.mapper.EbookMapper;
@@ -20,12 +21,13 @@ public class EbookService {
     private EbookMapper ebookMapper;
 
     public List<EbookResp> list(EbookReq req) {
+        PageHelper.startPage(1,3);
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
+
         if (ObjectUtils.isEmpty(req.getBookName())){
             criteria.andBookNameLike("%" + req.getBookName() + "%");
         }
-
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
         List<EbookResp> respList = new ArrayList<>();
