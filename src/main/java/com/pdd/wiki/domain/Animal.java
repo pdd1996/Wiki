@@ -1,6 +1,7 @@
 package com.pdd.wiki.domain;
 
 public class Animal {
+    // 封装
     private Integer id;
     private String animalName;
     private String type;
