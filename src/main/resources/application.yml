@@ -7,9 +7,9 @@ spring:
   # 数据库连接
   datasource:
     driverClassName: com.mysql.jdbc.Driver
+    username: wiki
     password: wiki
     url: jdbc:mysql://localhost:3306/wiki?characterEncoding=UTF8&autoReconnect=true&useSSL=false
-    username: wiki
 
 # MyBatis
 mybatis:
