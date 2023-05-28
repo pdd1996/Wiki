@@ -19,7 +19,7 @@
 
 ### 核心
 
-![](D:\Programs\Wiki\Notes\img\springboot_core.png)
+![](../img/springboot_core.png)
 
 ### 技术栈
 
