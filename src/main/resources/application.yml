@@ -1,2 +1,25 @@
-#server:
-#  port: 8882
+# 开发环境配置
+server:
+  port: 8882
+
+# Spring配置
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    password: wiki
+    url: jdbc:mysql://localhost:3306/wiki?characterEncoding=UTF8&autoReconnect=true&useSSL=false
+    username: wiki
+
+# MyBatis
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+
+# 日志配置
+logging:
+  level:
+    com:
+      pdd:
+        wiki:
+          mapper: trace
+
+
