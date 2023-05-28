@@ -4,6 +4,7 @@ server:
 
 # Spring配置
 spring:
+  # 数据库连接
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     password: wiki
