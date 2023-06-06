@@ -93,15 +93,14 @@ export default defineComponent({
     MessageOutlined,
   },
   setup() {
+    // 响应式的数据
     const ebooks = ref();
-    const ebooks1 = reactive({ books: [] })
 
+    // 初始化
     onMounted(() => {
-      console.log("onMounted222");
       axios.get("/ebook/list?bookName=java").then((resp) => {
         const data = resp.data;
         ebooks.value = data.content;
-        ebooks1.books = data.content;
       })
     });
     const actions: Record<string, string>[] = [
@@ -112,7 +111,6 @@ export default defineComponent({
 
     return {
       ebooks,
-      ebooks2: toRef(ebooks1, "books"),
       selectedKeys1: ref<string[]>(['2']),
       selectedKeys2: ref<string[]>(['1']),
       openKeys: ref<string[]>(['sub1']),
