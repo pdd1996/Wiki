@@ -15,7 +15,7 @@
                 subnav 1
               </span>
             </template>
-            <a-menu-item key="1">option1111</a-menu-item>
+            <a-menu-item key="1">option1</a-menu-item>
             <a-menu-item key="2">option2</a-menu-item>
             <a-menu-item key="3">option3</a-menu-item>
             <a-menu-item key="4">option4</a-menu-item>
@@ -42,7 +42,7 @@
             <a-menu-item key="9">option9</a-menu-item>
             <a-menu-item key="10">option10</a-menu-item>
             <a-menu-item key="11">option11</a-menu-item>
-            <a-menu-item key="12">option12dsda</a-menu-item>
+            <a-menu-item key="12">option12</a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, reactive, toRef } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue';
 import axios from 'axios';
 
@@ -98,7 +98,7 @@ export default defineComponent({
 
     // 初始化
     onMounted(() => {
-      axios.get("/ebook/list?bookName=java").then((resp) => {
+      axios.get("/ebook/list").then((resp) => {
         const data = resp.data;
         ebooks.value = data.content;
       })
@@ -116,6 +116,12 @@ export default defineComponent({
       openKeys: ref<string[]>(['sub1']),
       listData,
       actions,
+      pagination: {
+        onChange: (page: any) => {
+          console.log(page)
+        },
+        pageSize: 3
+      }
     };
   },
 });
