@@ -93,7 +93,6 @@ export default defineComponent({
     MessageOutlined,
   },
   setup() {
-    console.log("setup");
     const ebooks = ref();
     const ebooks1 = reactive({ books: [] })
 
