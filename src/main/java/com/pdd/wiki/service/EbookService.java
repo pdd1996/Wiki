@@ -7,6 +7,7 @@ import com.pdd.wiki.req.EbookReq;
 import com.pdd.wiki.resp.EbookResp;
 import com.pdd.wiki.util.CopyUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,8 +21,10 @@ public class EbookService {
         // 查询条件 固定
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        // 模糊查询
-        criteria.andBookNameLike("%" + req.getBookName() + "%" );
+        // 模糊查询 + 动态判断
+        if(!ObjectUtils.isEmpty(req.getBookName())){
+            criteria.andBookNameLike("%" + req.getBookName() + "%" );
+        }
         // 根据条件查询，返回list
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
