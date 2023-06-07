@@ -4,7 +4,10 @@
       <a-table 
       :columns="columns" 
       :data-source="ebooks"
-      :rowKey="(record:any, index: number) => index"
+      :rowKey="(record: any, index ) => index"
+      :pagination="pagination"
+      :loading="loading"
+      @change="handleTableChange"
       >
         <template #cover="{ text: cover }">
           <img :src="cover" alt="avatar" />
@@ -76,16 +79,16 @@ const columns = [
 ];
 
 export default defineComponent({
-  name: 'adminEbook',
+  name: 'AdminEbook',
   setup() {
     const ebooks = ref();
-    const pagination = ref(() => ({
+    const pagination = ref({
       total: 0,
       // 当前页
       current: 1,
       // 展示页
-      pageSize: 3,
-    }));
+      pageSize: 2,
+    });
     const loading = ref(false);
 
     /**
@@ -94,18 +97,15 @@ export default defineComponent({
     const handleQuery = (params: any) => {
       loading.value = true;
       axios.get("/ebook/list", {
-        params: {
-          bookName: "Java",
-        }
+        params
       }).then((response) => {
         loading.value = false;
         const data = response.data;
         ebooks.value = data.content;
 
-
-          // 重置分页按钮
-          // pagination.value.current = params.page;
-          // pagination.value.total = data.content.total;
+        // 重置分页按钮
+        pagination.value.current = params.page;
+        // pagination.value.total = data.content.total;
         });
     };
 
@@ -113,7 +113,6 @@ export default defineComponent({
      * 表格点击页码时触发
      */
     const handleTableChange = (pagination: any) => {
-      console.log("看看自带的分页参数都有啥：" + pagination);
       handleQuery({
         page: pagination.current,
         size: pagination.pageSize
@@ -136,30 +135,6 @@ export default defineComponent({
 
   },
 });
-
-// const data = [
-//   {
-//     key: '1',
-//     cover: '/image/JavaScript.jpg',
-//     name: 'JavaScript',
-//     category_1: '1',
-//     category_2: '2',
-//     documents: '40',
-//     readings: '30',
-//     likes: '40',
-//   },
-//   {
-//     key: '2',
-//     cover: '/image/TypeScript.jpg',
-//     name: 'TypeScript',
-//     category_1: '1',
-//     category_2: '2',
-//     documents: '50',
-//     readings: '30',
-//     likes: '40',
-//   },
-// ];
-
 
 </script>
 
