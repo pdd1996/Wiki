@@ -15,7 +15,7 @@ spring:
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
 
-# 日志配置
+# 日志配置 trace最低等级
 logging:
   level:
     com:
