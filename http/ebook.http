@@ -1,4 +1,4 @@
-GET http://localhost:8882/ebook/list?bookName=java
+GET http://localhost:8882/ebook/list
 Accept: application/json
 
 ###
