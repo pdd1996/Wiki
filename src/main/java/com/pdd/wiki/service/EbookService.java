@@ -7,6 +7,7 @@ import com.pdd.wiki.domain.EbookExample;
 import com.pdd.wiki.mapper.EbookMapper;
 import com.pdd.wiki.req.EbookReq;
 import com.pdd.wiki.resp.EbookResp;
+import com.pdd.wiki.resp.PageResp;
 import com.pdd.wiki.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<EbookResp> list(EbookReq req) {
+    public PageResp<EbookResp> list(EbookReq req) {
 
         // 查询条件 固定
         EbookExample ebookExample = new EbookExample();
@@ -32,7 +33,12 @@ public class EbookService {
             criteria.andBookNameLike("%" + req.getBookName() + "%" );
         }
         // 分页
-        PageHelper.startPage(1, 3);
+        /**
+         * pageNum 当前页的号码
+         * pageSize 每页的数量
+         * 举例 pageNum=1 pageSize=3 从第一页取三条数据，如果总数是五条的话，就两页
+         */
+        PageHelper.startPage(req.getPage(), req.getSize());
         // 根据条件查询，返回list
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
@@ -43,6 +49,10 @@ public class EbookService {
         //  List<Ebook> -> List<EbookResp>
         List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
 
-        return list;
+        PageResp<EbookResp> pageResp = new PageResp();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(list);
+
+        return pageResp;
     }
 }
