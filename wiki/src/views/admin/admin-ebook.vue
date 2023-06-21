@@ -87,13 +87,13 @@ export default defineComponent({
       // 当前页
       current: 1,
       // 展示页
-      pageSize: 2,
+      pageSize: 4,
     });
     const loading = ref(false);
 
     /**
-           * 数据查询
-           **/
+      * 数据查询
+    **/
     const handleQuery = (params: any) => {
       loading.value = true;
       axios.get("/ebook/list", {
@@ -101,11 +101,11 @@ export default defineComponent({
       }).then((response) => {
         loading.value = false;
         const data = response.data;
-        ebooks.value = data.content;
-
+        // ebooks.value = data.content;
+        ebooks.value = data.content.list;
         // 重置分页按钮
         pagination.value.current = params.page;
-        // pagination.value.total = data.content.total;
+        pagination.value.total = data.content.total;
         });
     };
 
@@ -120,7 +120,11 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      handleQuery({});
+      // handleQuery({});
+      handleQuery({
+        page: 1,
+        size: pagination.value.pageSize,
+      });
     });
 
     return {
