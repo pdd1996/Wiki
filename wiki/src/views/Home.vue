@@ -65,7 +65,7 @@
                 <template #title>
                   <a :href="item.href">{{ item.bookName }}</a>
                 </template>
-                <template #avatar><a-avatar :src="item.cover" /></template>
+                <template #avatar><a-avatar :src="item.bookCover" /></template>
               </a-list-item-meta>
             </a-list-item>
           </template>
@@ -98,9 +98,14 @@ export default defineComponent({
 
     // 初始化
     onMounted(() => {
-      axios.get("/ebook/list").then((resp) => {
+      axios.get("/ebook/list",{
+        params:{
+          page: 1,
+          size: 1000
+        }
+      }).then((resp) => {
         const data = resp.data;
-        ebooks.value = data.content;
+        ebooks.value = data.content.list;
       })
     });
     const actions: Record<string, string>[] = [
