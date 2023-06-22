@@ -97,7 +97,10 @@ export default defineComponent({
     const handleQuery = (params: any) => {
       loading.value = true;
       axios.get("/ebook/list", {
-        params
+        params: {
+          page: params.page,
+          size: params.size,
+        }
       }).then((response) => {
         loading.value = false;
         const data = response.data;
