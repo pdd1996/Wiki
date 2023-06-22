@@ -37,6 +37,7 @@ public class EbookService {
          * pageNum 当前页的号码
          * pageSize 每页的数量
          * 举例 pageNum=1 pageSize=3 从第一页取三条数据，如果总数是五条的话，就两页
+         * req.getPage() 获取父类的page
          */
         PageHelper.startPage(req.getPage(), req.getSize());
         // 根据条件查询，返回list

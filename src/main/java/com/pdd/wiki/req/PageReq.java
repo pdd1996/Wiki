@@ -1,6 +1,10 @@
 package com.pdd.wiki.req;
 
 public class PageReq {
+    /**
+     * @page 页码
+     * @size 条数
+     */
     private int page;
     private int size;
 
