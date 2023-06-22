@@ -4,7 +4,7 @@
       <a-table 
       :columns="columns" 
       :data-source="ebooks"
-      :rowKey="(record: any, index ) => index"
+      :rowKey="(record: any, index: any ) => index"
       :pagination="pagination"
       :loading="loading"
       @change="handleTableChange"
@@ -12,9 +12,9 @@
         <template #cover="{ text: cover }">
           <img :src="cover" alt="avatar" />
         </template>
-        <template #action="{}">
+        <template #action="{record}">
           <a-space size="small">
-            <a-button type="primary" size="small">
+            <a-button type="primary" size="small" @click="handleEdit(record)">
               编辑
             </a-button>
             <a-popconfirm title="删除后不可恢复，确认删除?" ok-text="是" cancel-text="否">
@@ -27,6 +27,29 @@
       </a-table>
     </a-layout-content>
   </a-layout>
+
+  <a-modal 
+    v-model:visible="modalVisible"
+    title="电子书表单" 
+    @ok="handleModalOk">
+    <a-form :model="ebook" :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }">
+      <a-form-item label="封面">
+        <a-input v-model:value="ebook.bookCover" />
+      </a-form-item>
+      <a-form-item label="名称">
+        <a-input v-model:value="ebook.bookName" />
+      </a-form-item>
+      <a-form-item label="分类一">
+        <a-input v-model:value="ebook.category1" />
+      </a-form-item>
+      <a-form-item label="分类二">
+        <a-input v-model:value="ebook.category2" />
+      </a-form-item>
+      <a-form-item label="描述">
+        <a-input v-model:value="ebook.bookDesc" />
+      </a-form-item>
+    </a-form>
+  </a-modal>
 </template> 
 
 
@@ -90,7 +113,17 @@ export default defineComponent({
       pageSize: 4,
     });
     const loading = ref(false);
-
+    const modalVisible = ref(false)
+    const formState = ref({
+      name: ''
+    })
+    const ebook = ref({
+      bookCover: '',
+      bookName: '',
+      category1: '',
+      category2: '',
+      bookDesc: '',
+    });
     /**
       * 数据查询
     **/
@@ -122,6 +155,15 @@ export default defineComponent({
       });
     };
 
+    const handleModalOk = () => {
+      modalVisible.value = true
+    }
+
+    const handleEdit = (record: any) => {
+      modalVisible.value = true
+      ebook.value = record
+    }
+
     onMounted(() => {
       // handleQuery({});
       handleQuery({
@@ -135,7 +177,12 @@ export default defineComponent({
       pagination,
       columns,
       loading,
-      handleTableChange
+      modalVisible,
+      formState,
+      ebook,
+      handleTableChange,
+      handleModalOk,
+      handleEdit
     };
   },
   components: {
