@@ -129,7 +129,7 @@ export default defineComponent({
       // 当前页
       current: 1,
       // 展示页
-      pageSize: 1001,
+      pageSize: 4,
     });
     const loading = ref(false);
     const modalVisible = ref(false)
@@ -190,6 +190,8 @@ export default defineComponent({
               page: pagination.value.current,
               size: pagination.value.pageSize,
             });
+          } else {
+            message.error(data.message);
           }
         });
     }
