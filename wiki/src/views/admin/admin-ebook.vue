@@ -2,7 +2,11 @@
   <a-layout style="padding: 24px 0; background: #fff">
     <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
       <p>
-        <a-button type="primary" size="large" @click="handleAdd">
+        <a-button 
+          type="primary" 
+          size="large" 
+          @click="handleAdd"
+          >
           新增
         </a-button>
       </p>
@@ -22,7 +26,12 @@
             <a-button type="primary" size="small" @click="handleEdit(record)">
               编辑
             </a-button>
-            <a-popconfirm title="删除后不可恢复，确认删除?" ok-text="是" cancel-text="否">
+            <a-popconfirm 
+              title="删除后不可恢复，确认删除?" 
+              ok-text="是" 
+              cancel-text="否"
+              @confirm="handleDelete(record.id)"
+            >
               <a-button danger  size="small">
                 删除
               </a-button>
@@ -36,7 +45,10 @@
   <a-modal 
     v-model:visible="modalVisible"
     title="电子书表单" 
-    @ok="handleModalOk">
+    @ok="handleModalOk"
+    ok-text="确定" 
+    cancel-text="取消"
+    >
     <a-form :model="ebook" :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }">
       <a-form-item label="封面">
         <a-input v-model:value="ebook.bookCover" />
@@ -193,6 +205,21 @@ export default defineComponent({
       }
     }
 
+    const handleDelete = (id: number) => {
+      axios.delete("/ebook/delete/" + id)
+      .then((response) => {
+          const data = response.data;
+          if(data.success) {
+            
+            // 重新加载页面
+            handleQuery({
+              page: pagination.value.current,
+              size: pagination.value.pageSize,
+            });
+          }
+        });
+    }
+
     onMounted(() => {
       // handleQuery({});
       handleQuery({
@@ -211,7 +238,8 @@ export default defineComponent({
       handleTableChange,
       handleModalOk,
       handleEdit,
-      handleAdd
+      handleAdd,
+      handleDelete
     };
   },
   components: {
