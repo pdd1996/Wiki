@@ -1,8 +1,11 @@
 package com.pdd.wiki.req;
 
+import javax.validation.constraints.NotEmpty;
+
 public class EbookSaveReq {
     private Long id;
 
+    @NotEmpty(message = "【名称】不能为空")
     private String bookName;
 
     private Long category1;
