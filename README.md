@@ -6,13 +6,17 @@
 
 项目链接
 
-[Spring Boot+Vue3前后端分离，实战wiki知识库系统]: https://coding.imooc.com/class/474.html
+ [Spring Boot+Vue3前后端分离，实战wiki知识库系统](https://coding.imooc.com/class/474.html)
+
+------
 
 
 
 ### 笔记
 
 笔记记录在Notes中
+
+------
 
 
 
