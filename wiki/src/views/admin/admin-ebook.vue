@@ -114,9 +114,6 @@ export default defineComponent({
     });
     const loading = ref(false);
     const modalVisible = ref(false)
-    const formState = ref({
-      name: ''
-    })
     const ebook = ref({
       bookCover: '',
       bookName: '',
@@ -157,6 +154,21 @@ export default defineComponent({
 
     const handleModalOk = () => {
       modalVisible.value = true
+      
+      axios
+      .post("/ebook/save", ebook.value)
+      .then((response) => {
+          const data = response.data;
+          if(data.success) {
+            modalVisible.value = false;
+            
+            // 重新加载页面
+            handleQuery({
+              page: pagination.value.current,
+              size: pagination.value.pageSize,
+            });
+          }
+        });
     }
 
     const handleEdit = (record: any) => {
@@ -178,7 +190,6 @@ export default defineComponent({
       columns,
       loading,
       modalVisible,
-      formState,
       ebook,
       handleTableChange,
       handleModalOk,

@@ -1,6 +1,7 @@
-package com.pdd.wiki.resp;
+package com.pdd.wiki.req;
 
-public class EbookResp {
+public class EbookSaveReq {
+    private Long id;
 
     private String bookName;
 
@@ -17,6 +18,14 @@ public class EbookResp {
     private Long viewCount;
 
     private Long likeCount;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getBookName() {
         return bookName;
@@ -88,6 +97,7 @@ public class EbookResp {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", bookName=").append(bookName);
         sb.append(", category1=").append(category1);
         sb.append(", category2=").append(category2);
