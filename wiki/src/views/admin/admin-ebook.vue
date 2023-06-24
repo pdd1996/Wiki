@@ -1,6 +1,11 @@
 <template>
   <a-layout style="padding: 24px 0; background: #fff">
     <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
+      <p>
+        <a-button type="primary" size="large" @click="handleAdd">
+          新增
+        </a-button>
+      </p>
       <a-table 
       :columns="columns" 
       :data-source="ebooks"
@@ -176,6 +181,18 @@ export default defineComponent({
       ebook.value = record
     }
 
+    const handleAdd = () => {
+      //todo
+      modalVisible.value = true
+      ebook.value = {
+        bookCover: '',
+        bookName: '',
+        category1: '',
+        category2: '',
+        bookDesc: '',
+      }
+    }
+
     onMounted(() => {
       // handleQuery({});
       handleQuery({
@@ -193,7 +210,8 @@ export default defineComponent({
       ebook,
       handleTableChange,
       handleModalOk,
-      handleEdit
+      handleEdit,
+      handleAdd
     };
   },
   components: {

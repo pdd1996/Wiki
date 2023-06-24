@@ -10,6 +10,7 @@ import com.pdd.wiki.req.EbookSaveReq;
 import com.pdd.wiki.resp.EbookQueryResp;
 import com.pdd.wiki.resp.PageResp;
 import com.pdd.wiki.util.CopyUtil;
+import com.pdd.wiki.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class EbookService {
     private static final Logger logger = LoggerFactory.getLogger(EbookService.class);
     @Resource
     private EbookMapper ebookMapper;
+
+    @Resource
+    private SnowFlake snowFlake;
 
     public PageResp<EbookQueryResp> list(EbookQueryReq req) {
 
@@ -65,6 +69,7 @@ public class EbookService {
         Ebook ebook = CopyUtil.copy(req, Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())){
             // 新增
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         } else {
             // 更新
