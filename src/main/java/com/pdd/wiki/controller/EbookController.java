@@ -9,6 +9,7 @@ import com.pdd.wiki.service.EbookService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/ebook")
@@ -21,7 +22,7 @@ public class EbookController {
     @GetMapping("/list")
     // CommonResp 统一返回 后端统一通用的返回格式
     // 泛型 + List
-    public CommonResp list(EbookQueryReq req) {
+    public CommonResp list(@Valid EbookQueryReq req) {
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
         // 数据库取来的数据赋值给 list
         PageResp<EbookQueryResp> list = ebookService.list(req);

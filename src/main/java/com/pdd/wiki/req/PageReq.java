@@ -1,11 +1,17 @@
 package com.pdd.wiki.req;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 public class PageReq {
     /**
-     * @page 页码
-     * @size 条数
+     * page 页码
+     * size 条数
      */
+    @NotNull(message = "【页码】不能为空")
     private int page;
+    @NotNull(message = "【每页条数】不能为空")
+    @Max(value = 1000, message = "【每页条数】不能超过1000")
     private int size;
 
     public int getPage() {
