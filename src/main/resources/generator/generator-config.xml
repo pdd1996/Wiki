@@ -47,7 +47,9 @@
 
         <!--<table tableName="demo" domainObjectName="Demo"/>-->
 <!--        <table tableName="demo"/>-->
-        <table tableName="ebook"/>
+<!--        <table tableName="ebook"/>-->
+        <table tableName="category"/>
+
         <!--        设置要生成对应类的表名-->
         <!--        <table tableName="test"/>-->
     </context>
