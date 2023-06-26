@@ -28,6 +28,19 @@ public class CategoryService {
     @Resource
     private SnowFlake snowFlake;
 
+    public List<CategoryQueryResp> all() {
+
+        // 查询条件 固定
+        CategoryExample categoryExample = new CategoryExample();
+        // 根据sort排序
+        categoryExample.setOrderByClause("sort asc");
+        // 根据条件查询，返回list
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+
+        List<CategoryQueryResp> list = CopyUtil.copyList(categoryList, CategoryQueryResp.class);
+
+        return list;
+    }
     public PageResp<CategoryQueryResp> list(CategoryQueryReq req) {
 
         // 查询条件 固定
