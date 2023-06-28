@@ -12,13 +12,13 @@
       </p>
       <a-table 
       :columns="columns" 
-      :data-source="categorys"
+      :data-source="level1"
       :rowKey="(record: any, index: any ) => index"
       :pagination="false"
       >
-        <template #cover="{ text: cover }">
+        <!-- <template #cover="{ text: cover }">
           <img :src="cover" alt="avatar" />
-        </template>
+        </template> -->
         <template #action="{record}">
           <a-space size="small">
             <a-button type="primary" size="small" @click="handleEdit(record)">
@@ -52,7 +52,16 @@
         <a-input v-model:value="category.name" />
       </a-form-item>
       <a-form-item label="父分类">
-        <a-input v-model:value="category.parent" />
+        <!-- <a-input v-model:value="category.parent" /> -->
+        <a-select
+          ref="select"
+          v-model:value="category.parent"
+        >
+          <a-select-option value="0">无</a-select-option>
+          <a-select-option v-for="c in level1" :key="c.id" :value="c.id" :disabled="category.id === c.id">
+            {{ c.name }}
+          </a-select-option>
+        </a-select>
       </a-form-item>
       <a-form-item label="顺序">
         <a-input v-model:value="category.sort" />
@@ -67,6 +76,7 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
+import {Tool} from '../../util/tool'
 
 const columns = [
   {
@@ -103,17 +113,34 @@ export default defineComponent({
       sort: ''
     });
     /**
+     * [{
+     *  id: '',
+     *  name: '',
+     *  children: [{
+     *  id: '',
+     *  name: '',
+     *  }]
+     * }]
+     */
+    // 一级分类树，children属性是二级分类
+    const level1 = ref();
+
+    /**
       * 数据查询
     **/
     const handleQuery = () => {
       loading.value = true;
+      level1.value = [];
       axios.get("/category/all").then((response) => {
         loading.value = false;
         const data = response.data;
-        if(data.success) {
-          // categorys.value = data.content;
+        if (data.success) {
           categorys.value = data.content;
+          console.log("原始数组:",categorys.value);
 
+          level1.value = {};
+          level1.value = Tool.array2Tree(categorys.value,0)
+          console.log("树形结构：",level1)
         } else {
           message.error(data.message);
         }
@@ -175,6 +202,7 @@ export default defineComponent({
       loading,
       modalVisible,
       category,
+      level1,
       handleModalOk,
       handleEdit,
       handleAdd,
