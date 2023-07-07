@@ -23,6 +23,11 @@
         </template>
         <template #action="{record}">
           <a-space size="small">
+            <router-link to="/admin/doc">
+              <a-button type="primary" size="small">
+                文档管理
+              </a-button>
+            </router-link>
             <a-button type="primary" size="small" @click="handleEdit(record)">
               编辑
             </a-button>
