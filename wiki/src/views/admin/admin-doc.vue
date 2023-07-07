@@ -42,34 +42,34 @@
 
   <a-modal 
     v-model:visible="modalVisible"
-    title="分类表单" 
+    title="文档表单" 
     @ok="handleModalOk"
     ok-text="确定" 
     cancel-text="取消"
     >
-    <a-form :model="category" :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }">
+    <a-form :model="doc" :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }">
       <a-form-item label="名称">
-        <a-input v-model:value="category.name" />
+        <a-input v-model:value="doc.name" />
       </a-form-item>
-      <a-form-item label="父分类">
-        <!-- <a-input v-model:value="category.parent" /> -->
+      <a-form-item label="父文档">
+        <!-- <a-input v-model:value="doc.parent" /> -->
         <a-select
           ref="select"
-          v-model:value="category.parent"
+          v-model:value="doc.parent"
         >
           <a-select-option value="0">无</a-select-option>
           <a-select-option 
             v-for="c in level1" 
             :key="c.id" 
             :value="c.id" 
-            :disabled="category.id === c.id"
+            :disabled="doc.id === c.id"
           >
             {{ c.name }}
           </a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item label="顺序">
-        <a-input v-model:value="category.sort" />
+        <a-input v-model:value="doc.sort" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -90,7 +90,7 @@ const columns = [
     key: 'name',
   },
   {
-    title: '父分类',
+    title: '父文档',
     dataIndex: 'parent',
     key: 'parent',
   },
@@ -107,12 +107,12 @@ const columns = [
 ];
 
 export default defineComponent({
-  name: 'AdminCategory',
+  name: 'AdminDoc',
   setup() {
-    const categorys = ref();
+    const docs = ref();
     const loading = ref(false);
     const modalVisible = ref(false)
-    const category = ref({
+    const doc = ref({
       name:'',
       parent: '',
       sort: ''
@@ -127,7 +127,7 @@ export default defineComponent({
      *  }]
      * }]
      */
-    // 一级分类树，children属性是二级分类
+    // 一级文档树，children属性是二级文档
     const level1 = ref();
 
     /**
@@ -136,15 +136,15 @@ export default defineComponent({
     const handleQuery = () => {
       loading.value = true;
       level1.value = [];
-      axios.get("/category/all").then((response) => {
+      axios.get("/doc/all").then((response) => {
         loading.value = false;
         const data = response.data;
         if (data.success) {
-          categorys.value = data.content;
-          console.log("原始数组:",categorys.value);
+          docs.value = data.content;
+          console.log("原始数组:",docs.value);
 
           level1.value = {};
-          level1.value = Tool.array2Tree(categorys.value,0)
+          level1.value = Tool.array2Tree(docs.value,0)
           console.log("树形结构：",level1)
         } else {
           message.error(data.message);
@@ -156,7 +156,7 @@ export default defineComponent({
       modalVisible.value = true
       
       axios
-      .post("/category/save", category.value)
+      .post("/doc/save", doc.value)
       .then((response) => {
           const data = response.data;
           if(data.success) {
@@ -172,13 +172,13 @@ export default defineComponent({
 
     const handleEdit = (record: any) => {
       modalVisible.value = true
-      category.value = record
+      doc.value = record
     }
 
     const handleAdd = () => {
       //todo
       modalVisible.value = true
-      category.value = {
+      doc.value = {
         name:'',
         parent: '',
         sort: ''
@@ -186,7 +186,7 @@ export default defineComponent({
     }
 
     const handleDelete = (id: number) => {
-      axios.delete("/category/delete/" + id)
+      axios.delete("/doc/delete/" + id)
       .then((response) => {
           const data = response.data;
           if(data.success) {
@@ -202,11 +202,11 @@ export default defineComponent({
     });
 
     return {
-      categorys,
+      docs,
       columns,
       loading,
       modalVisible,
-      category,
+      doc,
       level1,
       handleModalOk,
       handleEdit,
