@@ -21,6 +21,9 @@
         <template #cover="{ text: cover }">
           <img :src="cover" alt="avatar" />
         </template>
+        <template #category="{ text: record }">
+          <span>{{ getCategoryName(record.category1) }} / {{ getCategoryName(record.category2) }}</span>
+        </template>
         <template #action="{record}">
           <a-space size="small">
             <router-link to="/admin/doc">
@@ -61,12 +64,20 @@
       <a-form-item label="名称">
         <a-input v-model:value="ebook.bookName" />
       </a-form-item>
-      <a-form-item label="分类一">
+      <a-form-item label="分类">
+        <!-- 显示的是name 实际要取的字段 id -->
+        <a-cascader 
+          v-model:value="categoryIds" 
+          :options="level1" 
+          :field-names = "{ label:'name', value: 'id', children: 'children'}" 
+        />
+      </a-form-item>
+      <!-- <a-form-item label="分类一">
         <a-input v-model:value="ebook.category1" />
       </a-form-item>
       <a-form-item label="分类二">
         <a-input v-model:value="ebook.category2" />
-      </a-form-item>
+      </a-form-item> -->
       <a-form-item label="描述">
         <a-input v-model:value="ebook.bookDesc" />
       </a-form-item>
@@ -80,6 +91,7 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
+import { Tool } from '@/util/tool';
 
 const columns = [
   {
@@ -93,15 +105,19 @@ const columns = [
     dataIndex: 'bookName',
     key: 'bookName',
   },
+  // {
+  //   title: '分类1',
+  //   dataIndex: 'category1',
+  //   key: 'category1',
+  // },
+  // {
+  //   title: '分类2',
+  //   key: 'category2',
+  //   dataIndex: 'category2',
+  // },
   {
-    title: '分类1',
-    dataIndex: 'category1',
-    key: 'category1',
-  },
-  {
-    title: '分类2',
-    key: 'category2',
-    dataIndex: 'category2',
+    title: '分类',
+    slots: { customRender: 'category' },
   },
   {
     title: '文档数',
@@ -146,6 +162,13 @@ export default defineComponent({
       bookDesc: '',
     });
     /**
+     * 级联组件
+     * 数组 [100, 101]对应 案例： 前端/vue
+     */
+    const categoryIds = ref();
+    const level1 = ref();
+
+    /**
       * 数据查询
     **/
     const handleQuery = (params: any) => {
@@ -182,7 +205,9 @@ export default defineComponent({
 
     const handleModalOk = () => {
       modalVisible.value = true
-      
+      ebook.value.category1 = categoryIds.value[0];
+      ebook.value.category2 = categoryIds.value[1];
+
       axios
       .post("/ebook/save", ebook.value)
       .then((response) => {
@@ -204,6 +229,7 @@ export default defineComponent({
     const handleEdit = (record: any) => {
       modalVisible.value = true
       ebook.value = record
+      categoryIds.value = [ebook.value.category1, ebook.value.category2]
     }
 
     const handleAdd = () => {
@@ -233,8 +259,46 @@ export default defineComponent({
         });
     }
 
+
+    /**
+     * 查询所有分类
+     */
+    let categorys: any;
+
+    const handleQueryCategory = () => {
+      loading.value = true;
+      level1.value = [];
+      axios.get("/category/all").then((response) => {
+        loading.value = false;
+        const data = response.data;
+        if (data.success) {
+          categorys = data.content;
+          console.log("原始数组:",categorys);
+
+          level1.value = {};
+          level1.value = Tool.array2Tree(categorys,0)
+          console.log("树形结构：",level1.value)
+        } else {
+          message.error(data.message);
+        }
+      });
+    }
+
+    const getCategoryName = (cid: number) => {
+      console.log(cid, "cid")
+      console.log(categorys, "categorys")
+      let result = "";
+
+      categorys.forEach((item: any) => {
+        if(item.id === cid) {
+          result = item.name;
+        }
+      });
+
+      return result;
+    }
     onMounted(() => {
-      // handleQuery({});
+      handleQueryCategory();
       handleQuery({
         page: 1,
         size: pagination.value.pageSize,
@@ -248,11 +312,15 @@ export default defineComponent({
       loading,
       modalVisible,
       ebook,
+      categoryIds,
+      level1,
       handleTableChange,
       handleModalOk,
       handleEdit,
       handleAdd,
-      handleDelete
+      handleDelete,
+      handleQueryCategory,
+      getCategoryName
     };
   },
   components: {
