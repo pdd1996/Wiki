@@ -81,7 +81,7 @@ public class CategoryService {
     public void save(CategorySaveReq req) {
         Category category = CopyUtil.copy(req, Category.class);
         if (ObjectUtils.isEmpty(req.getId())){
-            // 新增
+            // 新增 使用雪花算法生成 id
             category.setId(snowFlake.nextId());
             categoryMapper.insert(category);
         } else {
