@@ -12,8 +12,12 @@
           v-model:selectedKeys="selectedKeys2" 
           v-model:openKeys="openKeys" 
           style="height: 100%"
+          @click="handleClick"
         >
-          <a-menu-item key="welcome">
+          <a-menu-item 
+            key="welcome"
+         
+          >
             <router-link :to="'/'">
               <span>欢迎</span>
             </router-link>
@@ -32,11 +36,15 @@
         </a-menu>
       </a-layout-sider>
       <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
+        <div class="welcome" v-show="isShowWelcome">
+          <h1>欢迎使用Wiki</h1>
+        </div>
         <a-list 
         item-layout="vertical" 
         size="large" 
         :data-source="ebooks"
         :grid="{ gutter: 25, column: 3 }"
+        v-show="!isShowWelcome"
         >
           <template #renderItem="{ item }">
             <a-list-item key="item.bookName">
@@ -82,21 +90,24 @@ export default defineComponent({
   setup() {
     // 响应式的数据
     const ebooks = ref();
+    const isShowWelcome = ref(true);
+    let category2 = 0;
     const level1 = ref();
     let categorys: any
     // 初始化
-    onMounted(() => {
-      handleQueryCategory();
+
+    const handleQueryEbook = () => {
       axios.get("/ebook/list",{
         params:{
           page: 1,
-          size: 1000
+          size: 1000,
+          category2
         }
       }).then((resp) => {
         const data = resp.data;
         ebooks.value = data.content.list;
       })
-    });
+    }
 
     const handleQueryCategory = () => {
       axios.get("/category/all").then((response) => {
@@ -114,6 +125,22 @@ export default defineComponent({
         }
       });
     }; 
+
+    const handleClick = (value: any) => {
+      console.log("menu", value);
+      if(value.key == 'welcome') {
+        isShowWelcome.value = true;
+      } else {
+        category2 = value.key
+        isShowWelcome.value = false;
+        handleQueryEbook();
+      }
+    }
+
+    onMounted(() => {
+      handleQueryCategory();
+      // handleQueryEbook();
+    });
 
     const actions: Record<string, string>[] = [
       { type: 'StarOutlined', text: '156' },
@@ -135,7 +162,9 @@ export default defineComponent({
         pageSize: 3
       },
       level1,
-      handleQueryCategory
+      isShowWelcome,
+      handleQueryCategory,
+      handleClick
     };
   },
 });

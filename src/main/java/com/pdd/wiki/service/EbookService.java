@@ -37,6 +37,9 @@ public class EbookService {
         if(!ObjectUtils.isEmpty(req.getBookName())){
             criteria.andBookNameLike("%" + req.getBookName() + "%" );
         }
+        if(!ObjectUtils.isEmpty(req.getCategory2())){
+            criteria.andCategory2EqualTo(req.getCategory2());
+        }
         // 分页
         /**
          * pageNum 当前页的号码
